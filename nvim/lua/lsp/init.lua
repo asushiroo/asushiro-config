@@ -85,12 +85,11 @@ local function setup_diagnostics()
 	vim.diagnostic.config({
 		update_in_insert = true,
 		severity_sort = true,
+		underline = true,
 		float = {
 			border = "rounded",
 		},
-		virtual_text = {
-			spacing = 2,
-		},
+		virtual_text = false,
 		signs = {
 			text = {
 				[vim.diagnostic.severity.ERROR] = " ",

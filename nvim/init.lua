@@ -1,3 +1,5 @@
 require("core.basic")
 require("core.keymap")
+require("core.autocmd")
+require("core.transparent").setup()
 require("core.lazy")
