@@ -3,6 +3,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-${(%):-%x}}")" && pwd)"
 rc_modules=(
 	"env.sh"
 	"zshrc.sh"
+    "utils.sh"
 )
 
 load_module() {
