@@ -2,6 +2,9 @@ return {
 	"nvim-tree/nvim-tree.lua",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 	opts = {
+		filters = {
+			git_ignored = true,
+		},
 		view = {
 			number = true,
 			relativenumber = true,
@@ -14,6 +17,5 @@ return {
 	},
 	keys = {
 		{ "<leader>uf", ":NvimTreeToggle<CR>" },
-		{ "<leader>uh", ":NvimTreeToggleHidden<CR>" },
 	},
 }
