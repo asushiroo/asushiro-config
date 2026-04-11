@@ -11,6 +11,9 @@ required_formulae=(
 	fzf
 	zoxide
 	cmake
+	imagemagick
+	librsvg
+	node
 )
 
 ubuntu_packages_for_tree_sitter=(

@@ -14,6 +14,9 @@ return {
 			"bash",
 			"json",
 			"markdown",
+			"markdown_inline",
+			"html",
+			"latex",
 			"toml",
 			"yaml",
 		}

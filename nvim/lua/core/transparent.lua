@@ -32,6 +32,9 @@ local base_groups = {
 	"NvimTreeNormalNC",
 	"NvimTreeEndOfBuffer",
 	"NvimTreeWinSeparator",
+	"MarkviewCode",
+	"MarkviewInlineCode",
+	"MarkviewCodeInfo",
 }
 
 local function set_bg_none(name)
@@ -46,10 +49,23 @@ local function set_bg_none(name)
 	vim.api.nvim_set_hl(0, name, hl)
 end
 
+local function clear_markview_backgrounds()
+	for i = 0, 9 do
+		set_bg_none("MarkviewPalette" .. i)
+		set_bg_none("MarkviewPalette" .. i .. "Bg")
+	end
+
+	for i = 1, 6 do
+		set_bg_none("MarkviewHeading" .. i)
+	end
+end
+
 function M.apply()
 	for _, group in ipairs(base_groups) do
 		set_bg_none(group)
 	end
+
+	clear_markview_backgrounds()
 
 	local ok, config = pcall(require, "bufferline.config")
 	if ok and config.highlights then
