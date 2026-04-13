@@ -23,3 +23,21 @@ cdf() {
 
 	echo "No directory found matching: $pattern"
 }
+
+ide() {
+	session="work"
+	if ! tmux has-session -t "$session" 2>/dev/null; then
+		# 1. 在后台创建会话
+		tmux new-session -d -s "$session"
+
+		# 2. 关键：先 attach 进去，利用 -c 参数在进入后立即执行布局命令
+		# 这样 tmux 能拿到真实的窗口尺寸后再进行百分比切分
+		tmux attach-session -t "$session" \; \
+			run-shell "tmux split-window -h -p 20; \
+                       tmux select-pane -t 0; \
+                       tmux split-window -v -p 15; \
+                       tmux select-pane -t 0"
+	else
+		tmux attach-session -t "$session"
+	fi
+}
