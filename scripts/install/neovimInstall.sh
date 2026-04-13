@@ -3,6 +3,13 @@
 set -euo pipefail
 
 minimum_tree_sitter_cli_version="0.26.1"
+cargo_domestic_sparse_index="sparse+https://rsproxy.cn/index/"
+rustup_upstream_script_url="https://sh.rustup.rs"
+rustup_domestic_script_url="https://rsproxy.cn/rustup-init.sh"
+rustup_domestic_dist_server="https://rsproxy.cn"
+rustup_domestic_update_root="https://rsproxy.cn/rustup"
+npm_domestic_registry="https://registry.npmmirror.com"
+nvm_domestic_node_mirror="https://npmmirror.com/mirrors/node"
 
 required_formulae=(
 	neovim
@@ -66,6 +73,37 @@ load_cargo_env_if_available() {
 	fi
 
 	return 1
+}
+
+run_rustup_installer() {
+	local script_url="$1"
+	shift
+
+	local rustup_script
+	rustup_script="$(mktemp)"
+	curl --proto '=https' --tlsv1.2 -sSf "$script_url" -o "$rustup_script"
+	sh "$rustup_script" "$@"
+	local status=$?
+	rm -f "$rustup_script"
+	return "$status"
+}
+
+run_nvm_install_lts() {
+	if nvm install --lts; then
+		return 0
+	fi
+
+	echo "Node.js LTS install failed with upstream source, retrying with domestic mirror..."
+	NVM_NODEJS_ORG_MIRROR="$nvm_domestic_node_mirror" nvm install --lts
+}
+
+run_npm_command() {
+	if npm "$@"; then
+		return 0
+	fi
+
+	echo "npm command failed with upstream registry, retrying with domestic mirror..."
+	npm --registry "$npm_domestic_registry" "$@"
 }
 
 run_as_root() {
@@ -142,9 +180,10 @@ ensure_npm_available() {
 	fi
 
 	if command -v nvm >/dev/null 2>&1; then
-		echo "Installing Node.js LTS via nvm..."
-		nvm install --lts
-		nvm use --lts >/dev/null
+		echo "Installing Node.js LTS via nvm (upstream source first)..."
+		if run_nvm_install_lts; then
+			nvm use --lts >/dev/null
+		fi
 	fi
 
 	if command -v npm >/dev/null 2>&1; then
@@ -210,7 +249,14 @@ ensure_cargo_available() {
 	fi
 
 	echo "cargo not found, installing Rust toolchain via rustup..."
-	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal
+	if run_rustup_installer "$rustup_upstream_script_url" -y --profile minimal; then
+		:
+	else
+		echo "Rust toolchain install failed with upstream source, retrying with domestic mirror..."
+		RUSTUP_DIST_SERVER="$rustup_domestic_dist_server" \
+			RUSTUP_UPDATE_ROOT="$rustup_domestic_update_root" \
+			run_rustup_installer "$rustup_domestic_script_url" -y --profile minimal
+	fi
 	load_cargo_env_if_available
 
 	if command -v cargo >/dev/null 2>&1; then
@@ -275,10 +321,10 @@ ensure_mdmath_js_dependencies() {
 		return 0
 	fi
 
-	echo "Installing/repairing mdmath.js dependencies..."
+	echo "Installing/repairing mdmath.js dependencies (upstream registry first)..."
 	(
 		cd "$mdmath_js_dir"
-		npm install --no-fund --no-audit
+		run_npm_command install --no-fund --no-audit
 	)
 
 	if mdmath_mathjax_is_healthy "$mdmath_js_dir"; then
@@ -292,8 +338,8 @@ ensure_mdmath_js_dependencies() {
 
 install_tree_sitter_cli_with_npm() {
 	ensure_npm_available
-	echo "Installing tree-sitter-cli via npm..."
-	npm install -g tree-sitter-cli
+	echo "Installing tree-sitter-cli via npm (upstream registry first)..."
+	run_npm_command install -g tree-sitter-cli
 }
 
 install_tree_sitter_cli_with_cargo() {
@@ -303,8 +349,13 @@ install_tree_sitter_cli_with_cargo() {
 	if command -v npm >/dev/null 2>&1; then
 		npm uninstall -g tree-sitter-cli >/dev/null 2>&1 || true
 	fi
-	echo "Installing tree-sitter-cli via cargo..."
-	cargo install tree-sitter-cli --locked --force
+	echo "Installing tree-sitter-cli via cargo (upstream source first)..."
+	if cargo install tree-sitter-cli --locked --force; then
+		return 0
+	fi
+
+	echo "tree-sitter-cli install failed with upstream cargo source, retrying with domestic mirror..."
+	cargo install tree-sitter-cli --locked --force --index "$cargo_domestic_sparse_index"
 }
 
 install_tree_sitter_cli_if_needed() {
