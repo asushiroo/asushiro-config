@@ -13,7 +13,7 @@ terminal tools install scripts and config files
 通过修改配置将所有主题改成透明协调的方案
 整个终端以透明终端为基调
 
-![rieri](./test/IMG_4528.PNG)
+![rieri](./sources/IMG_4528.PNG)
 
 $\alpha$是整个$\beta$
 

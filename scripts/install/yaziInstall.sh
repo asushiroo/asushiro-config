@@ -14,6 +14,10 @@ linux_formulae=(
 	xclip
 )
 
+yazi_plugins=(
+	"dedukun/relative-motions"
+)
+
 resolve_brew_bin() {
 	if command -v brew >/dev/null 2>&1; then
 		command -v brew
@@ -59,12 +63,28 @@ install_formulae_if_needed() {
 	brew install "${missing_formulae[@]}"
 }
 
+install_yazi_plugins_if_possible() {
+	local plugin
+
+	if ! command -v ya >/dev/null 2>&1; then
+		echo "Skipping Yazi plugin install because 'ya' is unavailable"
+		return 0
+	fi
+
+	for plugin in "${yazi_plugins[@]}"; do
+		echo "Installing Yazi plugin: $plugin"
+		if ! ya pkg add "$plugin"; then
+			echo "Warning: failed to install Yazi plugin $plugin" >&2
+		fi
+	done
+}
+
 print_runtime_notes() {
 	echo
 	echo "Yazi is ready: $(yazi --version)"
 	echo "Tips:"
 	echo "  - Use 'y' instead of 'yazi' to allow shell cwd sync after quit."
-	echo "  - On remote Linux -> local macOS, clipboard sync prefers OSC52 through your terminal/tmux."
+	echo "  - relative-motions plugin is configured for vim-like motions such as 3j / 12k / 10gg."
 	echo "  - xclip is installed for Linux X11 clipboard fallback."
 }
 
@@ -78,6 +98,7 @@ main() {
 	fi
 
 	install_formulae_if_needed "${formulae[@]}"
+	install_yazi_plugins_if_possible
 	print_runtime_notes
 }
 

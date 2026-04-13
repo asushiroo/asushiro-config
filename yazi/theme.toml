@@ -3,11 +3,30 @@ overall = { bg = "reset" }
 
 [mgr]
 cwd = { fg = "green", bold = true }
+find_keyword = { fg = "black", bg = "yellow", bold = true }
+find_position = { fg = "magenta", bold = true }
+symlink_target = { fg = "cyan" }
+marker_copied = { fg = "lightyellow", bg = "reset", bold = true }
+marker_cut = { fg = "lightred", bg = "reset", bold = true }
+marker_marked = { fg = "lightcyan", bg = "reset", bold = true }
+marker_selected = { fg = "lightgreen", bg = "reset", bold = true }
+count_copied = { fg = "lightyellow", bg = "reset", bold = true }
+count_cut = { fg = "lightred", bg = "reset", bold = true }
+count_selected = { fg = "lightgreen", bg = "reset", bold = true }
+border_symbol = "│"
 border_style = { fg = "darkgray", bg = "reset" }
+
+[indicator]
+parent = { fg = "darkgray", bg = "reset" }
+current = { fg = "black", bg = "darkgray", bold = true }
+preview = { fg = "black", bg = "darkgray" }
+padding = { open = "", close = "" }
 
 [tabs]
 active = { fg = "green", bg = "reset", bold = true }
 inactive = { fg = "gray", bg = "reset" }
+sep_inner = { open = "", close = "" }
+sep_outer = { open = "", close = "" }
 
 [mode]
 normal_main = { fg = "green", bg = "reset", bold = true }
@@ -19,5 +38,72 @@ unset_alt = { fg = "white", bg = "reset" }
 
 [status]
 overall = { fg = "white", bg = "reset" }
+sep_left = { open = "", close = "" }
+sep_right = { open = "", close = "" }
+progress_label = { fg = "white", bg = "reset", bold = true }
 progress_normal = { fg = "green", bg = "reset" }
 progress_error = { fg = "red", bg = "reset" }
+perm_type = { fg = "cyan" }
+perm_read = { fg = "yellow" }
+perm_write = { fg = "red" }
+perm_exec = { fg = "green" }
+perm_sep = { fg = "darkgray" }
+
+[which]
+cols = 2
+mask = { bg = "reset" }
+cand = { fg = "green", bold = true }
+rest = { fg = "white" }
+desc = { fg = "gray" }
+separator = "  →  "
+separator_style = { fg = "darkgray" }
+
+[input]
+border = { fg = "green" }
+title = { fg = "green", bold = true }
+value = { fg = "white" }
+selected = { fg = "white", bg = "darkgray" }
+
+[confirm]
+border = { fg = "yellow" }
+title = { fg = "yellow", bold = true }
+body = { fg = "white" }
+list = { fg = "gray" }
+btn_yes = { fg = "black", bg = "green", bold = true }
+btn_no = { fg = "black", bg = "red", bold = true }
+
+[pick]
+border = { fg = "cyan" }
+active = { fg = "white", bg = "darkgray", bold = true }
+inactive = { fg = "white" }
+
+[cmp]
+border = { fg = "green" }
+active = { fg = "white", bg = "darkgray", bold = true }
+inactive = { fg = "white" }
+icon_file = ""
+icon_folder = ""
+icon_command = ""
+
+[tasks]
+border = { fg = "magenta" }
+title = { fg = "magenta", bold = true }
+hovered = { fg = "white", bg = "darkgray", bold = true }
+
+[help]
+on = { fg = "green", bold = true }
+run = { fg = "cyan" }
+desc = { fg = "white" }
+hovered = { fg = "white", bg = "darkgray", bold = true }
+footer = { fg = "darkgray" }
+
+[filetype]
+rules = [
+	{ mime = "image/*", fg = "yellow" },
+	{ mime = "{audio,video}/*", fg = "magenta" },
+	{ mime = "application/{json,x-yaml,toml}", fg = "lightyellow" },
+	{ url = "*.md", fg = "lightblue" },
+	{ url = "*.{rs,go,py,lua,sh,zsh,bash,js,ts,tsx,jsx,c,cpp,h,hpp,java}", fg = "lightgreen" },
+	{ url = "*", is = "orphan", fg = "red" },
+	{ url = "*/", fg = "blue" },
+]

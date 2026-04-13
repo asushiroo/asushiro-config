@@ -1,11 +1,14 @@
 [mgr]
 ratio = [1, 3, 4]
 sort_by = "natural"
+sort_sensitive = false
+sort_reverse = false
 sort_dir_first = true
 show_hidden = true
 show_symlink = true
-linemode = "mtime"
+linemode = "size_and_mtime"
 scrolloff = 8
+mouse_events = ["click", "scroll"]
 
 [preview]
 wrap = "yes"
@@ -23,4 +26,15 @@ edit = [
 open = [
 	{ run = 'open %s', orphan = true, desc = "Open", for = "macos" },
 	{ run = 'xdg-open %s', orphan = true, desc = "Open", for = "linux" },
+]
+reveal = [
+	{ run = 'open -R %s', orphan = true, desc = "Reveal in Finder", for = "macos" },
+	{ run = 'xdg-open %d', orphan = true, desc = "Open parent dir", for = "linux" },
+]
+
+[open]
+prepend_rules = [
+	{ mime = "text/*", use = "edit" },
+	{ url = "*.{json,jsonc,toml,yaml,yml,md,txt,log,conf,ini,sh,bash,zsh,fish,lua,py,rs,c,cpp,h,hpp,go,java,js,ts,tsx,jsx,css,scss,html}" , use = "edit" },
+	{ url = "*.{pdf,png,jpg,jpeg,gif,webp,svg,mp4,mkv,mov,mp3,flac,wav}", use = ["open", "reveal"] },
 ]

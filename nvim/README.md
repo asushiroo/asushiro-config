@@ -3,6 +3,7 @@
 ## Leader 键
 
 - `Leader` = `<Space>`
+- `LocalLeader` = `,`
 
 ## 已启用的 LSP / 补全 / UI 插件
 
@@ -38,11 +39,15 @@
 
 ## 快捷键总览
 
-### 通用
+### 基础 / 通用
 
 | 快捷键 | 模式 | 说明 |
 | --- | --- | --- |
 | `<C-z>` | 普通 / 插入 | 撤销 |
+| `<Up>` | 普通 / 可视 | 向上滚动一行 |
+| `<Down>` | 普通 / 可视 | 向下滚动一行 |
+| `<Left>` | 普通 / 可视 | 向左横向滚动 5 列 |
+| `<Right>` | 普通 / 可视 | 向右横向滚动 5 列 |
 
 ### Bufferline
 
@@ -52,6 +57,12 @@
 | `<leader>bl` | 切换到下一个 buffer |
 | `<leader>bp` | 选择 buffer |
 | `<leader>bd` | 关闭当前 buffer |
+
+### 文件树 `nvim-tree`
+
+| 快捷键 | 说明 |
+| --- | --- |
+| `<leader>uf` | 切换文件树 |
 
 ### Hop
 
@@ -63,7 +74,7 @@
 
 | 快捷键 | 说明 |
 | --- | --- |
-| `<C-space>` | 打开补全菜单 |
+| `<C-space>` | 打开补全菜单 / 文档 |
 | `<C-e>` | 关闭补全菜单 |
 | `<CR>` | 确认当前补全项 |
 | `<Tab>` | 选择并确认补全 / 跳到下一个 snippet |
@@ -125,6 +136,17 @@
 | `<leader>lt` | 打开 diagnostics 列表 |
 | `<leader>lT` | 打开 symbols 列表 |
 
+### Markdown 预览 / 渲染
+
+| 快捷键 | 说明 |
+| --- | --- |
+| `<leader>um` | 切换 Markdown 渲染 |
+| `<leader>uM` | 打开 Markdown split preview |
+| `<leader>ue` | 开启公式渲染 |
+| `<leader>uE` | 关闭公式渲染 |
+| `<leader>ur` | 重新渲染公式 |
+| `<leader>ui` | 切换 Markdown 图片渲染 |
+
 ### Typst
 
 | 快捷键 | 说明 |
@@ -160,7 +182,8 @@
 - Typst 预览依赖本机可用的 Typst 环境
 - OmniSharp 依赖本机可用的 `dotnet`
 - Markdown LaTeX 渲染使用 vendored `mdmath.nvim`，依赖 `node` / `npm` / ImageMagick / `rsvg-convert`
-- Markdown LaTeX 渲染依赖终端支持 Kitty Graphics Protocol；通过 SSH + tmux 使用时，需要本地终端支持该协议，且远端 `tmux` 开启 `allow-passthrough`
+- Markdown 图片渲染依赖终端支持 Kitty Graphics Protocol
+- 通过 SSH + tmux 使用图片 / LaTeX 渲染时，需要本地终端支持该协议，且远端 `tmux` 开启 `allow-passthrough`
 - 若系统依赖不存在，对应专项插件 / LSP 会自动跳过加载，避免启动时报错
 
 ## 安装 / 更新
