@@ -87,5 +87,11 @@ All project environments need to be managed through virtual environments.
 ### Project Execution
 
 The project needs to be executed through the UV environment.
-If it's a model training task, it needs to be run in the background via tmux, and after execution,
+If it's a model training task or long-running task, it needs to be run in the background via tmux, and after execution,
 it needs to be suspended using `read` until I check the completed results.
+
+### Dataset Location
+
+When conducting comparative experiments, the code structure and file paths may vary across implementations.
+However, the dataset will always be placed in a fixed, predefined location. Do not rely on symbolic links or external path redirection;
+instead, modify the dataset path directly within the code for each experiment.
