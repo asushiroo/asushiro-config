@@ -18,8 +18,8 @@ border_style = { fg = "darkgray", bg = "reset" }
 
 [indicator]
 parent = { fg = "darkgray", bg = "reset" }
-current = { fg = "black", bg = "darkgray", bold = true }
-preview = { fg = "black", bg = "darkgray" }
+current = { fg = "white", bg = "darkgray", bold = true }
+preview = { fg = "white", bg = "black", bold = true }
 padding = { open = "", close = "" }
 
 [tabs]
@@ -105,5 +105,6 @@ rules = [
 	{ url = "*.md", fg = "lightblue" },
 	{ url = "*.{rs,go,py,lua,sh,zsh,bash,js,ts,tsx,jsx,c,cpp,h,hpp,java}", fg = "lightgreen" },
 	{ url = "*", is = "orphan", fg = "red" },
+	{ url = "*", fg = "white" },
 	{ url = "*/", fg = "blue" },
 ]
