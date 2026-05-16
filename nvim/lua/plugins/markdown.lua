@@ -1,7 +1,10 @@
+local is_windows = vim.fn.has("win32") == 1
+
 return {
 	{
 		"MeanderingProgrammer/render-markdown.nvim",
 		ft = { "markdown" },
+		enabled = not is_windows,
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
 			"nvim-tree/nvim-web-devicons",
@@ -59,6 +62,7 @@ return {
 		dir = vim.fs.joinpath(vim.fn.stdpath("config"), "vendor", "mdmath.nvim"),
 		name = "mdmath.nvim",
 		ft = { "markdown" },
+		enabled = not is_windows,
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
 		},

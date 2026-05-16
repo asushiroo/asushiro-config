@@ -9,8 +9,7 @@ $requiredPackages = @(
     @{ Id = 'sharkdp.fd'; Commands = @('fd'); Name = 'fd' },
     @{ Id = 'junegunn.fzf'; Commands = @('fzf'); Name = 'fzf' },
     @{ Id = 'ajeetdsouza.zoxide'; Commands = @('zoxide'); Name = 'zoxide' },
-    @{ Id = 'OpenJS.NodeJS.LTS'; Commands = @('node', 'npm'); Name = 'Node.js LTS' },
-    @{ Id = 'tree-sitter.tree-sitter-cli'; Commands = @('tree-sitter'); Name = 'tree-sitter-cli' }
+    @{ Id = 'OpenJS.NodeJS.LTS'; Commands = @('node', 'npm'); Name = 'Node.js LTS' }
 )
 
 foreach ($package in $requiredPackages) {

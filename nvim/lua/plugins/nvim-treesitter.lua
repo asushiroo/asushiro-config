@@ -1,10 +1,14 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
 	event = "VeryLazy",
+	enabled = vim.fn.has("win32") == 0,
 	-- 其余部分不变
 	branch = "main",
 	config = function()
 		local nvim_treesitter = require("nvim-treesitter")
+		local ts_install = require("nvim-treesitter.install")
+
+		ts_install.compilers = { "zig", "gcc", "clang" }
 		nvim_treesitter.setup()
 
 		local ensure_installed = {
